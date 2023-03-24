@@ -7,10 +7,17 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
 
     const addToCart = (product) => {
-        setCart((prevCart) => [...prevCart, product]);
+        setCart((prevCart) => {
+            const newCart = [...prevCart, product];
+            localStorage.setItem('cart', JSON.stringify(newCart));
+            return newCart;
+        });
     };
 
     const value = {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import Search from '../components/Search/Search';
 import CartSlideOut from '../components/Cart/CartSlideOut';
 
 const navigation = [
