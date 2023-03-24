@@ -1,9 +1,12 @@
+import React, { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import CartSlideOut from '../components/Cart/CartSlideOut';
 
 const navigation = [
-    { name: 'Home', href: '#', current: true },
-    { name: 'Products', href: '#', current: false },
+    { name: 'Home', href: '/', current: true },
+    { name: 'Products', href: '/product', current: false },
+    { name: 'About', href: '/about', current: false },
 ]
 
 function classNames(...classes) {
@@ -11,6 +14,8 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {{
+    const [cartOpen, setCartOpen] = useState(false)
+
     return (
         <Disclosure as="nav" className="bg-gray-900 w-full z-10 fixed top-0">
         {({ open }) => (
@@ -63,10 +68,12 @@ const NavBar = () => {{
                 <button 
                     type="button"
                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={() => setCartOpen(true)}
                 >
                     <span className="sr-only">View Cart</span>
                     <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
+                {cartOpen && <CartSlideOut setOpen={setCartOpen} />}
                 </div>
                 </div>
             </div>

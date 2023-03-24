@@ -51,11 +51,13 @@ const ProductListViewMore = () => {
                     {products.map((product) => (
                         <div key={product.id} className="relative object-cover transform transition-all duration-300 hover:-translate-y-2">
                             <div className="object-cover">
+                            <Link to={`/product/${product.id}${product.name}`}>
                                 <img
                                     src={product.imageSrc}
                                     alt={product.imageAlt}
                                     className="w-full aspect-auto object-cover rounded-xl mb-4"
                                 />
+                            </Link>
                             </div>
                             <div className="flex justify-between items-start mb-5">
                                 <div className="w-2/3 pr-6">
@@ -73,7 +75,7 @@ const ProductListViewMore = () => {
                 </div>
                 <div className="flex justify-center">
                 <a
-                    href=""
+                    href="/product"
                     className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-500"
                 >
                     View More

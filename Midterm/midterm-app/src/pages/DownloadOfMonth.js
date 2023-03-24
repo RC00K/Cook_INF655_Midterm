@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import WelcomeGrungeVibes from '../images/GrungeVibesPack/WelcomeGrungeVibes.jpg';
 
 const packOfTheMonth = [
     {
-        id: 1,
+        id: 4,
         name: 'Grunge Vibes',
         type: 'Graphic Pack',
         price: 'Free',
@@ -26,18 +27,19 @@ const DownloadOfMonth = () => {
                             />
                         </div>
                     ))}
+                    {packOfTheMonth.map((pack) => (
                     <div className="lg:py-24">
                         <h2 className="text-3xl font-bold sm:text-4xl">Free Pack of the Month</h2>
                         <p className="mt-4 text-gray-300">
                             Grunge Vibes Pack is one of our high-quality grunge textures that is exclusively free to download this month.
                         </p>
-                        <a
-                            href=""
+                        <Link to={`/product/${4}${pack.name}`}
                             className="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-500"
                         >
                             Download Now
-                        </a>
+                        </Link>
                     </div>
+                    ))}
                 </div>
             </div>
         </section>
