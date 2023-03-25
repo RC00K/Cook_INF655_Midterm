@@ -46,7 +46,7 @@ const products = [
         name: 'Abstract Fun',
         type: 'Graphic Pack',
         description: 'Shapes are fun and so abstract. Let your audience know that you are fun and abstract.',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeAbstractFun,
         imageAlt: 'Abstract fun is the best kind of fun.',
         images: [
@@ -66,7 +66,7 @@ const products = [
         name: 'Abstract Fun Invert',
         type: 'Graphic Pack',
         description: 'Inverted shapes are fun and so abstract. Let your audience know that you are fun and abstract.',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeAbstractFunInvert,
         imageAlt: 'Abstract fun is the best kind of fun.',
         images: [
@@ -86,7 +86,7 @@ const products = [
         name: 'Burst of Color',
         type: 'Graphic Pack',
         description: 'Let the colors pop of your screen with this burst of color.',
-        price: '$2',
+        price: 2,
         imageSrc: WelcomeBurstOfColor,
         imageAlt: 'Burst of color is the best kind of color.',
         images: [
@@ -120,7 +120,7 @@ const products = [
         name: 'Tear',
         description: 'It never hurts to tear things up and make a mess of things. Have some fun with this vintage future pack.',
         type: 'Graphic Pack',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeTear,
         imageAlt: 'Tear things up and make a mess of things.',
         images: [
@@ -139,7 +139,7 @@ const products = [
         id: 6,
         name: 'Vintage Future',
         type: 'Graphic Pack',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeNewFuture,
         imageAlt: 'Vintage is the new future.',
         features: [
@@ -152,7 +152,7 @@ const products = [
         id: 7,
         name: 'Out of this World',
         type: 'Graphic Pack',
-        price: '$5',
+        price: 5,
         imageSrc: WelcomeOOTW,
         imageAlt: 'Out of this world in to the next.',
         features: [
@@ -166,7 +166,7 @@ const products = [
         name: 'Playful Summer',
         type: 'Graphic Pack',
         description: 'Summer is here and its time for some fun. This graphic can be used any accation and will most certainly bring the good vibes to your audience.',
-        price: '$25',
+        price: 25,
         imageSrc: WelcomePS,
         imageAlt: 'Playful summers are sure to come.',
         images: [
@@ -185,7 +185,7 @@ const products = [
         id: 9,
         name: 'Retro Vibes',
         type: 'Graphic Pack',
-        price: '$25',
+        price: 25,
         imageSrc: WelcomeRV,
         imageAlt: 'Retro vibes are the best vibes.',
         features: [
@@ -198,7 +198,7 @@ const products = [
         id: 10,
         name: 'Social Design Light',
         type: 'Graphic Pack',
-        price: '$25',
+        price: 25,
         imageSrc: WelcomeLightSocialDesign,
         imageAlt: 'Social just got a whole lot lighter.',
         features: [
@@ -211,7 +211,7 @@ const products = [
         id: 11,
         name: 'Social Design Dark',
         type: 'Graphic Pack',
-        price: '$25',
+        price: 25,
         imageSrc: WelcomeDarkSocialDesign,
         imageAlt: 'Social just got a whole lot darker.',
         features: [
@@ -224,7 +224,7 @@ const products = [
         id: 12,
         name: 'Split Screen Blue',
         type: 'Graphic Pack',
-        price: '$10',
+        price: 10,
         imageSrc: WelcomeSplitBlue,
         imageAlt: 'Split the screen to make it blue.',
         features: [
@@ -237,7 +237,7 @@ const products = [
         id: 13,
         name: 'Split Screen Yellow',
         type: 'Graphic Pack',
-        price: '$10',
+        price: 10,
         imageSrc: WelcomeSplitYellow,
         imageAlt: 'Split the screen to make it yellow.',
         features: [
@@ -250,7 +250,7 @@ const products = [
         id: 14,
         name: 'Swirled',
         type: 'Graphic Pack',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeSwirled,
         imageAlt: 'Swirled is the new way to go.',
         images: [
@@ -269,7 +269,7 @@ const products = [
         id: 15,
         name: 'Touch Light',
         type: 'Graphic Pack',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeLightTouch,
         imageAlt: 'Touch the light the modern way.',
         features: [
@@ -282,7 +282,7 @@ const products = [
         id: 16,
         name: 'Touch Dark',
         type: 'Graphic Pack',
-        price: '$15',
+        price: 15,
         imageSrc: WelcomeDarkTouch,
         imageAlt: 'Touch the dark the modern way.',
         features: [

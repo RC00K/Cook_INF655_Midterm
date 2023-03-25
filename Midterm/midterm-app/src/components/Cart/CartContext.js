@@ -20,9 +20,18 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    const calculateTotalPrice = () => {
+        let total = 0;
+        cart.forEach((item) => {
+            total += Number(item.price);
+        });
+        return total;
+    };
+
     const value = {
         cart,
         addToCart,
+        totalPrice: calculateTotalPrice(),
     };
 
     return <CartContext.Provider value={value}>{ children }</CartContext.Provider>;

@@ -51,7 +51,7 @@ const ProductDetails = () => {
                             <h1 className="text-3xl font-bold">{selectedProduct.name}</h1>
                         </div>
                         <p className="text-gray-700">{selectedProduct.description}</p>
-                        <h6 className="text-2xl font-semibold">{selectedProduct.price}</h6>
+                        <h6 className="text-2xl font-semibold">${selectedProduct.price}</h6>
                         <div className="flex flex-row items-center gap-12">
                             <button 
                                 className="bg-black text-white font-semibold py-3 px-6 rounded-xl h-full"
