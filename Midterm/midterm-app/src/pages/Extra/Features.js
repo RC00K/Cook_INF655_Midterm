@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 export default function Features() {
     return (
         <section className="bg-gray-900 text-white">
@@ -14,7 +12,9 @@ export default function Features() {
                     </p>
                 </div>
                 
+                {/* Grid of features */}
                 <div className="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
+                    {/* Feature 1 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Creative</h2>
@@ -25,6 +25,7 @@ export default function Features() {
                         </div>
                     </div>
 
+                    {/* Feature 2 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Delivery</h2>
@@ -35,6 +36,7 @@ export default function Features() {
                         </div>
                     </div>
 
+                    {/* Feature 3 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Diverse</h2>
@@ -46,6 +48,7 @@ export default function Features() {
                         </div>
                     </div>
 
+                    {/* Feature 4 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Effective</h2>
@@ -58,6 +61,7 @@ export default function Features() {
                         </div>
                     </div>
 
+                    {/* Feature 5 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Inexpensive</h2>
@@ -67,7 +71,8 @@ export default function Features() {
                             </p>
                         </div>
                     </div>
-                    
+
+                    {/* Feature 6 */}
                     <div className="flex items-start gap-4">
                         <div>
                             <h2 className="text-lg font-bold">Quality</h2>

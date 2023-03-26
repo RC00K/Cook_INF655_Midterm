@@ -6,6 +6,7 @@ import WelcomeAbstractFunInvert from '../../images/AbstractFunPack/WelcomeAbstra
 import WelcomeBurstOfColor from '../../images/BurstOfColorPack/WelcomeBurstOfColor.jpg';
 import WelcomeGrungeVibes from '../../images/GrungeVibesPack/WelcomeGrungeVibes.jpg';
 
+// Products
 const products = [
     {
         id: 1,
@@ -35,7 +36,7 @@ const products = [
         id: 4,
         name: 'Grunge Vibes',
         type: 'Graphic Pack',
-        price: 'Free',
+        price: '$0',
         imageSrc: WelcomeGrungeVibes,
         imageAlt: 'Grunge is a new kind of vibe.',
     }
@@ -48,9 +49,11 @@ const ProductListViewMore = () => {
                 <h2 className="text-left text-2xl font-bold mb-8">Graphic Packs</h2>
                 <hr className="mb-8" />
                 <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                    {/* Products */}
                     {products.map((product) => (
                         <div key={product.id} className="relative object-cover transform transition-all duration-300 hover:-translate-y-2">
                             <div className="object-cover">
+                            {/* Link to Product */}
                             <Link to={`/product/${product.id}${product.name}`}>
                                 <img
                                     src={product.imageSrc}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../Cart/CartContext';
 import products from '../Product/ProductData';
+import ProductListViewMore from './ProductListViewMore';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -17,9 +18,19 @@ const ProductDetails = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto p-8">
+        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+            <h2 className="text-left text-xl font-bold">
+                <a 
+                    href="/product"
+                    className="mt-2 font-semibold hover:text-indigo-600 text-sm"
+                >
+                    Go Back
+                </a>
+            </h2>
+            <h2 className="text-left text-2xl font-bold mb-8">{selectedProduct.name} Pack</h2>
+            <hr className="mb-8" />
             {selectedProduct && (
-                <div className="flex flex-col justify-between lg:flex-row gap-16 lg:items-center" key={selectedProduct.id}>
+                <div className="flex flex-col justify-between lg:flex-row gap-16" key={selectedProduct.id}>
                     {/* Product images */}
                     <div className="flex flex-col gap-6 lg:w-2/4">
                         {selectedProduct.images?.length > 0 && (
@@ -73,6 +84,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
             )}
+            <ProductListViewMore  />
         </div>
     );
 }

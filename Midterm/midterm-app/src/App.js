@@ -1,16 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NavBar from './pages/NavBar';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import NotFound from './pages/NotFound';
-import products from './components/Product/ProductData';
-import ProductList from './components/Product/ProductList';
+import NavBar from './pages/Navigation/NavBar';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import Checkout from './pages/Checkout';
+import Success from './pages/Success';
 import ProductDetails from './components/Product/ProductDetails';
 import { CartProvider } from './components/Cart/CartContext';
-import Banner from './pages/Banner/Banner';
-import ProductCollection from './pages/Collection/ProductCollection';
-import CartSlideOut from './components/Cart/CartSlideOut';
 import './App.css';
 
 function App() {
@@ -19,8 +15,10 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product" element={<ProductList />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/product" element={<Products />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/success" element={<Success />} />
           <Route path="/product/:productId" element={<ProductDetails />} />
         </Routes>
       </BrowserRouter>
