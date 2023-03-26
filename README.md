@@ -24,8 +24,8 @@ Simple web application that allows users to browse and search for different type
     - Product price
     - Quantity price
     - Remove from cart button
-- Implement the functionality to add products to the cart when the user clicks the "Add to cart" button on a Product component. You should use state to keep track of the items in the cart. 
-- Implement the functionality to remove items from the cart when the user clicks the "Remove from cart" button on a Cart component. You should use state to keep track of the items in the cart.
+- Implement the functionality to add products to the cart when the user clicks the "Add to cart" button on a Product component. 
+- Implement the functionality to remove items from the cart when the user clicks the "Remove from cart" button on a Cart component.
 - Create a Checkout component that displays a form for the user to enter their shipping information. This component should also display the items in the cart, along with the total price of the order.
 - Implement the functionality to submit the form in the Checkout component. When the user submits the form, the items in the cart should be cleared and the user should be redirected to a "Thank you" page.
 - Implement navigation using the react-router-dom library.
