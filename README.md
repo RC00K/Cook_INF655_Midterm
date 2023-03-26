@@ -32,7 +32,10 @@ Simple web application that allows users to browse and search for different type
 - Use prop drilling to pass data between components as needed.
 
 ## Preview
-
+![Home](https://user-images.githubusercontent.com/48497255/227750937-4109bb6a-4284-4ec7-99d7-ffeb0ad2cf0c.jpg)
+![Product](https://user-images.githubusercontent.com/48497255/227750949-35e40b87-82eb-44d3-a2bf-b793ee9b5f66.jpg)
+![Search](https://user-images.githubusercontent.com/48497255/227750957-23c26538-d3e1-4e07-9e53-f295bc65a2f0.jpg)
+![Checkout](https://user-images.githubusercontent.com/48497255/227750963-48c0e6dd-3970-4616-8cce-51c462f4d654.jpg)
 
 ## Features
 - Smooth Navigation
