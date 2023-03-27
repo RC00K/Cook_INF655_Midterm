@@ -12,7 +12,7 @@ import './App.css';
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
