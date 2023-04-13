@@ -1,7 +1,32 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import firebase from 'firebase/app';
 
 const SignUp = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Get the values of the form fields.
+        const name = setName();
+        const email = setEmail();
+        const password = setPassword();
+
+        // Create a new user with the given values.
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((user) => {
+                // Redirect the user to the home page.
+                window.location.href = '/';
+            })
+            .catch((error) => {
+                // Display an error message.
+                console.log(error);
+            });
+    };
+
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -9,8 +34,8 @@ const SignUp = () => {
                     Get Started Today
                 </h1>
                 <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-                    Are you ready to experience graphics like never before? 
-                    Sign up for a free account to experience the 
+                    Are you ready to experience graphics like never before?
+                    Sign up for a free account to experience the
                     best graphics on the market.
                 </p>
                 <form
@@ -19,10 +44,12 @@ const SignUp = () => {
                 >
                     <p className="text-center text-lg font-medium">Create your account</p>
                     <div>
-                        <label for="email" className="sr-only">Full Name</label>
+                        <label for="name" className="sr-only">Full Name</label>
                         <div className="relative">
                             <input
                                 type="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                                 placeholder="Full Name"
                             />
@@ -34,6 +61,8 @@ const SignUp = () => {
                         <div className="relative">
                             <input
                                 type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                                 placeholder="Email"
                             />
@@ -45,6 +74,8 @@ const SignUp = () => {
                         <div className="relative">
                             <input
                                 type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                                 placeholder="Password"
                             />
