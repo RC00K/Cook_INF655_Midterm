@@ -9,6 +9,8 @@ const navigation = [
     { name: 'Home', href: '/', current: true }, // the current property indicates the active item
     { name: 'Products', href: '/product', current: false },
     { name: 'Checkout', href: '/checkout', current: false },
+    { name: 'Sign In', href: '/signin', current: false },
+    { name: 'Sign Up', href: '/signup', current: false },
 ]
 
 // Utility function to concatenate classes
