@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import WelcomeGrungeVibes from '../../images/GrungeVibesPack/WelcomeGrungeVibes.jpg';
 
 // Pack of the Month
 const packOfTheMonth = [
@@ -9,7 +8,7 @@ const packOfTheMonth = [
         name: 'Grunge Vibes',
         type: 'Graphic Pack',
         price: 'Free',
-        imageSrc: WelcomeGrungeVibes,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/GrungeVibesPack%2FWelcomeGrungeVibes.jpg?alt=media&token=17cac06c-ce36-4939-97bd-09a3bb188cb3',
         imageAlt: 'Grunge is a new kind of vibe.',
     }
 ];

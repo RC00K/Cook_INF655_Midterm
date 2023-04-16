@@ -1,11 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import WelcomeAbstractFun from '../../images/AbstractFunPack/WelcomeAbstractFun.jpg';
-import WelcomeAbstractFunInvert from '../../images/AbstractFunPack/WelcomeAbstractFunInvert.jpg';
-import WelcomeBurstOfColor from '../../images/BurstOfColorPack/WelcomeBurstOfColor.jpg';
-import WelcomeGrungeVibes from '../../images/GrungeVibesPack/WelcomeGrungeVibes.jpg';
-
 // Products
 const products = [
     {
@@ -13,7 +8,7 @@ const products = [
         name: 'Abstract Fun',
         type: 'Graphic Pack',
         price: '$15',
-        imageSrc: WelcomeAbstractFun,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/AbstractFunPack%2FWelcomeAbstractFun.jpg?alt=media&token=63e77f30-f0f9-49c2-89e5-3110b9ea2b10',
         imageAlt: 'Abstract fun is the best kind of fun.',
     },
     {
@@ -21,7 +16,7 @@ const products = [
         name: 'Abstract Fun Invert',
         type: 'Graphic Pack',
         price: '$15',
-        imageSrc: WelcomeAbstractFunInvert,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/AbstractFunPack%2FWelcomeAbstractFunInvert.jpg?alt=media&token=00b5501c-788c-48f3-a497-82a6896fcb9a',
         imageAlt: 'Abstract fun is the best kind of fun.',
     },
     {
@@ -29,7 +24,7 @@ const products = [
         name: 'Burst of Color',
         type: 'Graphic Pack',
         price: '$2',
-        imageSrc: WelcomeBurstOfColor,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/BurstOfColorPack%2FWelcomeBurstOfColor.jpg?alt=media&token=c73929cd-654a-4305-b3c8-ba51de96a948',
         imageAlt: 'Burst of color is the best kind of color.',
     },
     {
@@ -37,7 +32,7 @@ const products = [
         name: 'Grunge Vibes',
         type: 'Graphic Pack',
         price: '$0',
-        imageSrc: WelcomeGrungeVibes,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/GrungeVibesPack%2FWelcomeGrungeVibes.jpg?alt=media&token=17cac06c-ce36-4939-97bd-09a3bb188cb3',
         imageAlt: 'Grunge is a new kind of vibe.',
     }
 ];

@@ -10,7 +10,6 @@ const navigation = [
     { name: 'Products', href: '/product', current: false },
     { name: 'Checkout', href: '/checkout', current: false },
     { name: 'Sign In', href: '/signin', current: false },
-    { name: 'Sign Up', href: '/signup', current: false },
 ]
 
 // Utility function to concatenate classes

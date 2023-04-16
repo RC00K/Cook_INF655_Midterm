@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import WelcomeNewFuture from '../../images/NewVintageFuturePack/WelcomeNewFuture.jpg';
-import WelcomeDarkSocialDesign from '../../images/SocialDesignPack/WelcomeDarkSocialDesign.jpg';
-
 const products = [
     {
         id: 6,
@@ -11,7 +8,7 @@ const products = [
         description: 'Vintage is the new future.',
         type: 'Graphic Pack',
         price: '$15',
-        imageSrc: WelcomeNewFuture,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/NewVintageFuturePack%2FWelcomeNewFuture.jpg?alt=media&token=fa0fc698-1711-4803-a2a7-bcf1787037c8',
         imageAlt: 'Vintage is the new future.',
     },
     {
@@ -20,7 +17,7 @@ const products = [
         type: 'Graphic Pack',
         description: 'Social just got a whole lot darker.',
         price: '$25',
-        imageSrc: WelcomeDarkSocialDesign,
+        imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SocialDesignPack%2FWelcomeDarkSocialDesign.jpg?alt=media&token=e7b6282e-b122-46c8-b8ce-083524d50765',
         imageAlt: 'Social just got a whole lot darker.',
     },
 ];
