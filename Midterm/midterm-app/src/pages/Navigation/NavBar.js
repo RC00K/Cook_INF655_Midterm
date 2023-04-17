@@ -25,6 +25,9 @@ const NavBar = () => {
     // Handling cart open state
     const [cartOpen, setCartOpen] = useState(false);
 
+    // Handling user authentication state
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     // Event handler for searching products
     const handleSearch = (e) => {
         const searchTerm = e.target.value.toLowerCase();
@@ -38,6 +41,11 @@ const NavBar = () => {
             setSearchResults(results);
         }
     };
+
+    // Event handler for logging in/out
+    const handleLogin = () => {
+        setIsLoggedIn(!isLoggedIn);
+    }
 
     return (
         <Disclosure as="nav" className="bg-gray-900 w-full z-10 fixed top-0">
