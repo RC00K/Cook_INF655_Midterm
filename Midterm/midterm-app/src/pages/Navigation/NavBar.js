@@ -1,16 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import CartSlideOut from '../../components/Cart/CartSlideOut';
 import productData from '../../components/Product/ProductData';
-import { AuthContextProvider } from '../../components/Auth/AuthContext';
 
 // Array of navigation items
 const navigation = [
     { name: 'Home', href: '/', current: true }, // the current property indicates the active item
     { name: 'Products', href: '/product', current: false },
     { name: 'Checkout', href: '/checkout', current: false },
-    { name: isLoggedIn ? 'Sign Out' : 'Sign In', href: isLoggedIn ? '/signin' : '/signin', current: false },
 ]
 
 // Utility function to concatenate classes
@@ -26,9 +24,6 @@ const NavBar = () => {
     // Handling cart open state
     const [cartOpen, setCartOpen] = useState(false);
 
-    // Handling user authentication state
-    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContextProvider);
-
     // Event handler for searching products
     const handleSearch = (e) => {
         const searchTerm = e.target.value.toLowerCase();
@@ -42,11 +37,6 @@ const NavBar = () => {
             setSearchResults(results);
         }
     };
-
-    // Event handler for logging in/out
-    const handleSignOut = () => {
-        setIsLoggedIn(!isLoggedIn);
-    }
 
     return (
         <Disclosure as="nav" className="bg-gray-900 w-full z-10 fixed top-0">
@@ -78,7 +68,6 @@ const NavBar = () => {
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
-                                                onclick={item.name === 'Sign Out' ? handleSignOut : undefined}
                                             >
                                                 {item.name}
                                             </a>
@@ -146,6 +135,14 @@ const NavBar = () => {
                                     </button>
                                     {/* Cart Slide Out */}
                                     {cartOpen && <CartSlideOut setOpen={setCartOpen} />}
+                                </div>
+                                <div className="ml-4 hidden items-center gap-4 lg:flex">
+                                    <a href="/signin" className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
+                                        Sign In
+                                    </a>
+                                    <a href="/signout" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
+                                        Sign Up
+                                    </a>
                                 </div>
                             </div>
                         </div>

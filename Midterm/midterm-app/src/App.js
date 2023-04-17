@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './pages/Navigation/NavBar';
 import Home from './pages/Home';
 import Products from './pages/Products';
-import SignInForm from './pages/SignInForm';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import Checkout from './pages/Checkout';
 import Success from './pages/Success';
 import ProductDetails from './components/Product/ProductDetails';
@@ -12,11 +13,9 @@ import { AuthContextProvider } from './components/Auth/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import './App.css';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  
+function App() {  
   return (
-    <AuthContextProvider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContextProvider>
       <CartProvider>
         <BrowserRouter>
           <NavBar />
@@ -27,7 +26,11 @@ function App() {
             />
             <Route 
               path="/signin" 
-              element={<SignInForm />} 
+              element={<SignIn />} 
+            />
+            <Route
+              path="/signup"
+              element={<SignUp />}
             />
             <Route 
               path="/product" 
