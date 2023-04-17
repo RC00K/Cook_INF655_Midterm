@@ -1,6 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../firebase';
 
 // Store and manage the shopping cart data
 const CartContext = createContext();
@@ -34,15 +32,6 @@ export const CartProvider = ({ children }) => {
             } else {
                 const newCart = [...prevCart, { ...product, quantity }];
                 localStorage.setItem('cart', JSON.stringify(newCart));
-                const docRef = addDoc(collection(db, "cart"), {
-                    name: product.name,
-                    price: product.price,
-                    quantity: product.quantity,
-                    images: product.images,
-                    description: product.description,
-                    category: product.category,
-                });
-                console.log("Document written with ID: ", docRef.id);
                 return newCart;
             }
         });
