@@ -13,8 +13,10 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import './App.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  
   return (
-    <AuthContextProvider>
+    <AuthContextProvider value={{ isLoggedIn, setIsLoggedIn }}>
       <CartProvider>
         <BrowserRouter>
           <NavBar />

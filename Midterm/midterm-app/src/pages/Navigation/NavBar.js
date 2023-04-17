@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import CartSlideOut from '../../components/Cart/CartSlideOut';
 import productData from '../../components/Product/ProductData';
+import { AuthContextProvider } from '../../components/Auth/AuthContext';
 
 // Array of navigation items
 const navigation = [
     { name: 'Home', href: '/', current: true }, // the current property indicates the active item
     { name: 'Products', href: '/product', current: false },
     { name: 'Checkout', href: '/checkout', current: false },
-    { name: 'Sign In', href: '/signin', current: false },
+    { name: isLoggedIn ? 'Sign Out' : 'Sign In', href: isLoggedIn ? '/signin' : '/signin', current: false },
 ]
 
 // Utility function to concatenate classes
@@ -26,7 +27,7 @@ const NavBar = () => {
     const [cartOpen, setCartOpen] = useState(false);
 
     // Handling user authentication state
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContextProvider);
 
     // Event handler for searching products
     const handleSearch = (e) => {
@@ -43,7 +44,7 @@ const NavBar = () => {
     };
 
     // Event handler for logging in/out
-    const handleLogin = () => {
+    const handleSignOut = () => {
         setIsLoggedIn(!isLoggedIn);
     }
 
@@ -77,6 +78,7 @@ const NavBar = () => {
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
+                                                onclick={item.name === 'Sign Out' ? handleSignOut : undefined}
                                             >
                                                 {item.name}
                                             </a>
