@@ -140,7 +140,7 @@ const NavBar = () => {
                                     <a href="/signin" className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
                                         Sign In
                                     </a>
-                                    <a href="/signout" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
+                                    <a href="/signup" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
                                         Sign Up
                                     </a>
                                 </div>
