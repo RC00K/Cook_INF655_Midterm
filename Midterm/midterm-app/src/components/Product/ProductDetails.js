@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../Cart/CartContext';
 import products from '../Product/ProductData';
 import ProductListViewMore from './ProductListViewMore';
+import { collection, query, where } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
+import { addDoc, getDocs } from 'firebase/firestore';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -16,6 +19,46 @@ const ProductDetails = () => {
     const handleAddToCart = () => {
         addToCart(selectedProduct);
     };
+
+    const [product, setProduct] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
+    function GetCurrentUser() {
+        const [user, setUser] = useState('');
+        const usersCollectionRef = collection(db, "users");
+        useEffect(() => {
+            auth.onAuthStateChanged(userlogged => {
+                if (userlogged) {
+                    const getUsers = async () => {
+                        const q = query(collection(db, "users"), where("uid", "==", userlogged.uid));
+                        const data = await getDocs(q);
+                        setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+                    };
+                    getUsers();
+                } else {
+                    setUser(null);
+                }
+            })
+        }, [])
+        return user;
+    }
+    const loggedUser = GetCurrentUser();
+
+    const AddToCart = () => {
+        if (loggedUser) {
+            console.log(loggedUser[0].uid);
+            addDoc(collection(db, `cart-${loggedUser[0].uid}`), {
+                product, quantity: 1
+            }).then(() => {
+                setSuccessMsg("Product added to cart");
+            }).catch((error) => {
+                setErrorMsg(error.message);
+            });
+        } else {
+            setErrorMsg("You must be signed in to add to cart");
+        }
+    }
 
     return (
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -66,7 +109,7 @@ const ProductDetails = () => {
                         <div className="flex flex-row items-center gap-12">
                             <button 
                                 className="bg-black text-white font-semibold py-3 px-6 rounded-xl h-full"
-                                onClick={handleAddToCart}
+                                onClick={AddToCart}
                             >
                                 Add to Cart
                             </button>

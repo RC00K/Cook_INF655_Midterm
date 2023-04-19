@@ -1,22 +1,46 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../components/Auth/AuthContext';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export default function SignInForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const { signIn } = UserAuth();
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
-    const onSignIn = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        try {
-            await signIn(email, password);
-            navigate('/');
-        } catch (err) {
-            console.log(err);
-        }
+        const data = { email };
+        console.log(data);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user);
+                setSuccessMsg('Signed in successfully');
+                setEmail('');
+                setPassword('');
+                setErrorMsg('');
+                setTimeout(() => {
+                    setSuccessMsg('');
+                    navigate('/');
+                }, 4000);
+            })
+            .catch((error) => {
+                console.log(error.message)
+                if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                    setErrorMsg('Please fill in all required fields');
+                }
+                if (error.message === 'Firebase: Error (auth/user-not-found).') {
+                    setErrorMsg('Email not found');
+                }
+                if (error.message === 'Firebase: Error (auth/wrong-password).') {
+                    setErrorMsg('Incorrect password');
+                }
+            });
     };
 
     const renderForm = () => {
@@ -31,8 +55,23 @@ export default function SignInForm() {
                             Are you ready to experience graphics like never before? 
                             Sign in to your account to start your journey.
                         </p>
+                        {successMsg && 
+                        <>
+                            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                                <strong className="font-bold">Success! </strong>
+                                <span className="block sm:inline">{successMsg}</span>
+                            </div>
+                        </>}
+                        {errorMsg &&
+                        <>
+                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong className="font-bold">Error! </strong>
+                                <span className="block sm:inline">{errorMsg}</span>
+                            </div>
+                        </>}
+                        <br />
                         <form
-                            onSubmit={onSignIn}
+                            onSubmit={onSubmit}
                             className="mt-6 mb-0 space-y-4 rouned-lg p-4 shadow-lg sm:p-6 lg:p-8"
                         >
                             <p className="text-center text-lg font-medium">Sign in to your account</p>

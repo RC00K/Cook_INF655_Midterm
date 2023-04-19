@@ -20,7 +20,7 @@ export default function SignInForm() {
         console.log(data);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in
+                // Signed up
                 const user = userCredential.user;
                 const initialcartvalue = 0;
                 console.log(user);
@@ -29,17 +29,15 @@ export default function SignInForm() {
                     email: email,
                     cart: initialcartvalue,
                     uid: user.uid
-                }).then(() => {
-                    setSuccessMsg('User created successfully');
-                    setName('');
-                    setEmail('');
-                    setErrorMsg('');
-                    setTimeout(() => {
-                        setSuccessMsg('');
-                        navigate('/signin');
-                    }, 4000);
-                })
-                .catch((error) => { setErrorMsg(error.message) });
+                });
+                setSuccessMsg('User created successfully');
+                setName('');
+                setEmail('');
+                setErrorMsg('');
+                setTimeout(() => {
+                    setSuccessMsg('');
+                    navigate('/signin');
+                }, 4000);
             })
             .catch((error) => { 
                 if (error.message === 'Firebase: Error (auth/invalid-email).') {
