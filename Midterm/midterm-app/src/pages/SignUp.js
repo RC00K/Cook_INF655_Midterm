@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../components/Auth/AuthContext';
+import { addDoc, collection } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { db, auth } from '../firebase';
 
 export default function SignInForm() {
     const [name, setName] = useState('');
@@ -9,26 +11,44 @@ export default function SignInForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
-    const { createUser } = UserAuth();
+    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        const data = { name, email, password, confirmPassword };
+        const data = { name, email };
         console.log(data);
-        try {
-            await createUser(email, password).then((userCredential) => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                const initialcartvalue = 0;
                 console.log(user);
-                navigate('/home');
+                addDoc(collection(db, "users"), {
+                    name: name,
+                    email: email,
+                    cart: initialcartvalue,
+                    uid: user.uid
+                }).then(() => {
+                    setSuccessMsg('User created successfully');
+                    setName('');
+                    setEmail('');
+                    setErrorMsg('');
+                    setTimeout(() => {
+                        setSuccessMsg('');
+                        navigate('/signin');
+                    }, 4000);
+                })
+                .catch((error) => { setErrorMsg(error.message) });
+            })
+            .catch((error) => { 
+                if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                    setErrorMsg('Please fill in all required fields');
+                }
+                if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+                    setErrorMsg('Email already exists');
+                }
             });
-        } catch (err) {
-            console.log(err);
-        }
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
     };
 
     const renderForm = () => {
@@ -44,6 +64,21 @@ export default function SignInForm() {
                             Sign up for a free account to experience the
                             best graphics on the market.
                         </p>
+                        {successMsg && 
+                        <>
+                            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                                <strong className="font-bold">Success! </strong>
+                                <span className="block sm:inline">{successMsg}</span>
+                            </div>
+                        </>}
+                        {errorMsg &&
+                        <>
+                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong className="font-bold">Error! </strong>
+                                <span className="block sm:inline">{errorMsg}</span>
+                            </div>
+                        </>}
+                        <br />
                         <form
                             onSubmit={onSubmit}
                             className="mt-6 mb-0 space-y-4 rouned-lg p-4 shadow-lg sm:p-6 lg:p-8"
