@@ -9,6 +9,16 @@ Simple web application that allows users to browse and search for different type
 2. Product detail page: Display the details of a single product, including its name, description, and price.
 3. Search page: Allow users to search for products by name or category.
 4. Cart page: Display a list of products that the user has added to their cart.
+5. Integrate Firebase data management for CRUD (Create, Read, Update, Delete).
+6. Implement Firebase's authentication methods:
+    - createUserWithEmailAndPassword, 
+    - signInWithEmailAndPassword 
+7. Display appropriate error messages for failed sign-up/log-in attempts.
+8. Add a log-out functionality using Firebase's signOut method.
+9. Implement CRUD operations for managing products in the shopping cart using Firebase's Realtime Database or Firestore.
+10. Create components for displaying a list of products, adding products to the cart, updating product quantities, and removing products from the cart.
+11. Implement Firebase's database methods (such as set, get, update, remove, etc.) to perform CRUD operations on product data. 
+12. Use Firebase's real-time syncing capabilities to keep the cart data in sync across multiple devices/browsers.
 
 ### Requirements
 - Create a new ReactJS application using create-react-app.
