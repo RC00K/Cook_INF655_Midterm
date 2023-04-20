@@ -3,6 +3,8 @@ import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import CartSlideOut from '../../components/Cart/CartSlideOut';
 import productData from '../../components/Product/ProductData';
+import { auth } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
 
 // Array of navigation items
 const navigation = [
@@ -16,7 +18,9 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
+    const navigate = useNavigate();
+
     // Handling search results and search term.
     const [searchResults, setSearchResults] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -36,6 +40,12 @@ const NavBar = () => {
             );
             setSearchResults(results);
         }
+    };
+
+    const handleSignOut = () => {
+        auth.signOut().then(() => {
+            navigate('/signin');
+        });
     };
 
     return (
@@ -136,14 +146,25 @@ const NavBar = () => {
                                     {/* Cart Slide Out */}
                                     {cartOpen && <CartSlideOut setOpen={setCartOpen} />}
                                 </div>
-                                <div className="ml-4 hidden items-center gap-4 lg:flex">
-                                    <a href="/signin" className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
-                                        Sign In
-                                    </a>
-                                    <a href="/signup" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
-                                        Sign Up
-                                    </a>
-                                </div>
+                                {!user && 
+                                <>
+                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
+                                        <a href="/signin" className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
+                                            Sign In
+                                        </a>
+                                        <a href="/signup" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
+                                            Sign Up
+                                        </a>
+                                    </div>
+                                </>}
+                                {user &&
+                                <>
+                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
+                                        <a onClick={handleSignOut} className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
+                                            Sign Out
+                                        </a>
+                                    </div>
+                                </>}
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, collection } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { db, auth } from '../firebase';
+import { auth, fs } from '../firebase';
 
 export default function SignInForm() {
     const [name, setName] = useState('');
@@ -16,20 +16,15 @@ export default function SignInForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const data = { name, email };
-        console.log(data);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up
-                const user = userCredential.user;
-                const initialcartvalue = 0;
-                console.log(user);
-                addDoc(collection(db, "users"), {
-                    name: name,
-                    email: email,
-                    cart: initialcartvalue,
-                    uid: user.uid
-                });
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            const initialcartvalue = 0;
+            const userRef = doc(collection(fs, "users"), userCredential.user.uid);
+            const data = {
+                Name: name,
+                Email: email,
+                Cart: initialcartvalue
+            }
+            setDoc(userRef, data).then(() => {
                 setSuccessMsg('User created successfully');
                 setName('');
                 setEmail('');
@@ -38,15 +33,13 @@ export default function SignInForm() {
                     setSuccessMsg('');
                     navigate('/signin');
                 }, 4000);
-            })
-            .catch((error) => { 
-                if (error.message === 'Firebase: Error (auth/invalid-email).') {
-                    setErrorMsg('Please fill in all required fields');
-                }
-                if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
-                    setErrorMsg('Email already exists');
-                }
+            }).catch((error) => {
+                setErrorMsg(error.message)
             });
+            
+          }).catch((error) => {
+            setErrorMsg(error.message)
+        })
     };
 
     const renderForm = () => {

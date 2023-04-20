@@ -76,7 +76,7 @@ export default function SignInForm() {
                         >
                             <p className="text-center text-lg font-medium">Sign in to your account</p>
                             <div>
-                                <label for="email" className="sr-only">Email</label>
+                                <label htmlFor="email" className="sr-only">Email</label>
                                 <div className="relative">
                                     <input
                                         description="Email"
@@ -91,7 +91,7 @@ export default function SignInForm() {
                             </div>
 
                             <div>
-                                <label for="password" className="sr-only">Password</label>
+                                <label htmlFor="password" className="sr-only">Password</label>
                                 <div className="relative">
                                     <input
                                         description="Password"
