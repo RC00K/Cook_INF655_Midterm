@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import CartSlideOut from '../../components/Cart/CartSlideOut';
 import productData from '../../components/Product/ProductData';
 import { auth } from '../../firebase';
+import { useStateValue } from '../../store/StateProvider';
 import { useNavigate } from 'react-router-dom';
 
 // Array of navigation items
@@ -18,7 +20,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-const NavBar = ({ user }) => {
+const NavBar = () => {
     const navigate = useNavigate();
 
     // Handling search results and search term.
@@ -27,6 +29,7 @@ const NavBar = ({ user }) => {
 
     // Handling cart open state
     const [cartOpen, setCartOpen] = useState(false);
+    const [{ cart, user }] = useStateValue();
 
     // Event handler for searching products
     const handleSearch = (e) => {
@@ -42,10 +45,14 @@ const NavBar = ({ user }) => {
         }
     };
 
+    const userName = user ? user.email.substring(0, user.email.indexOf('@')) : 'Guest';
+
     const handleSignOut = () => {
-        auth.signOut().then(() => {
-            navigate('/signin');
-        });
+        if (user) {
+            auth.signOut().then(() => {
+                navigate('/signin');
+            });
+        };
     };
 
     return (
@@ -133,38 +140,42 @@ const NavBar = ({ user }) => {
                                         </div>
                                     )}
                                 </div>
+                                <>
+                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
+                                        <span className="text-gray-400">{`Hello, ${userName}`}</span>
+                                        <Link to={!user ? '/signin' : '/'} className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600 relative object-cover transform transition-all duration-300 hover:-translate-y-2">
+                                            <div className="flex items-center gap-2">
+                                                <button onClick={handleSignOut} type="button">
+                                                    {user ? 'Sign Out' : 'Sign In'}
+                                                </button>
+                                            </div>
+                                        </Link>
+                                        <span className="text-gray-400">Your</span>
+                                        <Link to={!user ? '/signin' : '/orders'} className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white relative object-cover transform transition-all duration-300 hover:-translate-y-2">
+                                            <div className="flex items-center gap-2">
+                                                <button type="button">
+                                                    Orders
+                                                </button>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </>
                                 <div className="ml-4">
                                     {/* View Cart */}
                                     <button
                                         type="button"
-                                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 relative object-cover transform transition-all duration-300 hover:-translate-y-2"
                                         onClick={() => setCartOpen(true)}
                                     >
                                         <span className="sr-only">View Cart</span>
                                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                                        <span className="absolute -right-1 text-xs text-white bg-red-500 rounded-full px-1">
+                                            {cart.length}
+                                        </span>
                                     </button>
                                     {/* Cart Slide Out */}
                                     {cartOpen && <CartSlideOut setOpen={setCartOpen} />}
                                 </div>
-                                {!user && 
-                                <>
-                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
-                                        <a href="/signin" className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
-                                            Sign In
-                                        </a>
-                                        <a href="/signup" className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white">
-                                            Sign Up
-                                        </a>
-                                    </div>
-                                </>}
-                                {user &&
-                                <>
-                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
-                                        <a onClick={handleSignOut} className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600">
-                                            Sign Out
-                                        </a>
-                                    </div>
-                                </>}
                             </div>
                         </div>
                     </div>

@@ -1,11 +1,15 @@
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { useCart } from './CartContext'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useState, useEffect } from 'react';
+import CurrencyFormat from 'react-currency-format';
+import { Dialog, Transition } from '@headlessui/react';
+import { useStateValue } from '../../store/StateProvider';
+import { getCartTotal } from '../../store/reducer';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import CheckoutProduct from '../../pages/CheckoutProduct';
 
 const CartSlideOut = ({ setOpen }) => {
-    // Get cart data and functions from CartContext
-    const { cart, removeFromCart, totalPrice } = useCart();
+    const [{ cart }] = useStateValue();
+    const prodCart = [...cart];
+    prodCart.sort((a, b) => a.id - b.id);
 
     return (
         // Transition for the slide-out cart
@@ -59,84 +63,61 @@ const CartSlideOut = ({ setOpen }) => {
                                             {/* Render the cart items */}
                                             <div className="mt-8">
                                                 <div className="flow-root">
-                                                    {cart.length === 0 ? (
-                                                        <p className="text-center text-gray-500">Cart is Empty</p>
-                                                    ) : (
-                                                        <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                                            {cart.map((product) => (
-                                                                <li key={product.id} className="flex py-6">
-                                                                    {/* Render the product image */}
-                                                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                        <img
-                                                                            src={product.images[0]}
-                                                                            alt={product.name}
-                                                                            className="h-full w-full object-cover object-center"
-                                                                        />
-                                                                    </div>
-                                                                    {/* Render the product details */}
-                                                                    <div className="ml-4 flex flex-1 flex-col">
-                                                                        <div>
-                                                                            <div className="flex justify-between text-base font-medium text-gray-900">
-                                                                                <h3>
-                                                                                    <a href={`/product/${product.id}`}>{product.name}</a>
-                                                                                </h3>
-                                                                                <p className="ml-4">${product.price}</p>
-                                                                            </div>
-                                                                            <p className="mt-1 text-sm text-gray-500">{product.type}</p>
-                                                                        </div>
-                                                                        {/* Render the product quantity and remove button */}
-                                                                        <div className="flex-1 flex items-end justify-between text-sm">
-                                                                            <span className="text-gray-500">Qty: {product.quantity}</span>
-                                                                            <div className="flex">
-                                                                                <button
-                                                                                    type="button"
-                                                                                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                                                    onClick={() => removeFromCart(product.id)}
-                                                                                >
-                                                                                    Remove
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
+                                                    {prodCart.map((item) => (
+                                                        <CheckoutProduct
+                                                            key={item.name + item.price}
+                                                            id={item.id}
+                                                            name={item.name}
+                                                            type={item.type}
+                                                            price={item.price}
+                                                            imageSrc={item.imageSrc}
+                                                            quantity={item.quantity}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Cart summary */}
+                                            <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+                                                {/* Display the subtotal if totalPrice is a number */}
+                                                <CurrencyFormat
+                                                    renderText={(value) => (
+                                                        <>
+                                                            <div className="flex justify-between text-base font-medium text-gray-900">
+                                                                <p>Subtotal</p>
+                                                                <p>{`${value}`}</p>
+                                                            </div>
+                                                        </>
                                                     )}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Cart summary */}
-                                        <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                                            {/* Display the subtotal if totalPrice is a number */}
-                                            {typeof totalPrice === 'number' && (
-                                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                                    <p>Subtotal</p>
-                                                    <p>${totalPrice.toFixed(2)}</p>
-                                                </div>
-                                            )}
-                                            {/* Go to Cart */}
-                                            <div className="mt-6">
-                                                <a
-                                                    href="/checkout"
-                                                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white hover:bg-indigo-700"
-                                                >
-                                                    Go to Cart
-                                                </a>
-                                            </div>
-
-                                            {/* Continue Shopping */}
-                                            <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                                <p>
-                                                    <button
-                                                        type="button"
-                                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                        onClick={() => setOpen(false)}
+                                                    decimalScale={2}
+                                                    value={getCartTotal(cart)}
+                                                    displayType="text"
+                                                    thousandSeparator
+                                                    prefix="$"
+                                                />
+                                                {/* Go to Cart */}
+                                                <div className="mt-6">
+                                                    <a
+                                                        href="/checkout"
+                                                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white hover:bg-indigo-700"
                                                     >
-                                                        Continue Shopping
-                                                        <span aria-hidden="true"> &rarr;</span>
-                                                    </button>
-                                                </p>
+                                                        Go to Cart
+                                                    </a>
+                                                </div>
+
+                                                {/* Continue Shopping */}
+                                                <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                                                    <p>
+                                                        <button
+                                                            type="button"
+                                                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                            onClick={() => setOpen(false)}
+                                                        >
+                                                            Continue Shopping
+                                                            <span aria-hidden="true"> &rarr;</span>
+                                                        </button>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

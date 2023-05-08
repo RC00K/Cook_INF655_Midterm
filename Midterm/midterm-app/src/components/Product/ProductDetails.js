@@ -6,74 +6,31 @@ import ProductListViewMore from './ProductListViewMore';
 import { fs, auth } from '../../firebase';
 import { collection, doc, getDoc, addDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useStateValue } from '../../store/StateProvider';
 
-const ProductDetails = () => {
+function ProductDetails({ id, name, images, type, price }) {
     const { productId } = useParams();
     
     const selectedProduct = products.find((product) => product.id === parseInt(productId));
     
     const [selectedImage, setSelectedImage] = useState(0);
-
-    const { addToCart } = useCart();
-
-    const handleAddToCart = () => {
-        addToCart(selectedProduct);
-    };
-
-    const [product, setProduct] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
-
-    function GetUserUid() {
-        const [uid, setUid] = useState(null);
-        useEffect(() => {
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    setUid(user.uid);
-                }
-            });
-        }, []);
-        return uid;
-    };
-
-    const uid = GetUserUid();
-
-    function GetCurrentUser() {
-        const [user, setUser] = useState(null);
-        useEffect(() => {
-            onAuthStateChanged(auth, user => {
-                if (user) {
-                    const uid = user.uid;
-                    const docRef = doc(collection(fs, "users"), uid);
-                    const docSnap = getDoc(docRef);
-                    docSnap.then((snapshot) => setUser(snapshot.data().name));
-                } else {
-                    setUser(null);
-                }
-            });
-        }, []);
-        return user;
-    };
-
-    const user = GetCurrentUser();
-
-    const navigate = useNavigate();
     
-    const AddToCart = (product) => {
-        if (uid !== null) {
-            console.log(uid[0].uid);
-            addDoc(collection(fs, `cart-${uid[0].uid}`), {
-                product, quantity: 1
-            }).then(() => {
-                setSuccessMsg("Product added to cart");
-            }).catch((error) => {
-                setErrorMsg(error.message);
-            });
-        } else {
-            setErrorMsg("You must be signed in to add to cart");
-            navigate('/signin');
-        }
-    }
+    const [, dispatch] = useStateValue();
+    const amount = 1;
+
+    const addToCart = () => {
+        dispatch({
+            type: 'ADD_TO_CART',
+            item: {
+                id,
+                images,
+                name,
+                type,
+                price,
+                amount
+            }
+        });
+    };
 
     return (
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -121,26 +78,10 @@ const ProductDetails = () => {
                         </div>
                         <p className="text-gray-700">{selectedProduct.description}</p>
                         <h6 className="text-2xl font-semibold">${selectedProduct.price}</h6>
-                        {successMsg &&
-                        <>
-                            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                                <strong className="font-bold">Success! </strong>
-                                <span className="block sm:inline">{successMsg}</span>
-                            </div>
-                        </>
-                        }
-                        {errorMsg &&
-                        <>
-                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <strong className="font-bold">Error! </strong>
-                                <span className="block sm:inline">{errorMsg}</span>
-                            </div>
-                        </>
-                        }
                         <div className="flex flex-row items-center gap-12">
                             <button 
                                 className="bg-black text-white font-semibold py-3 px-6 rounded-xl h-full"
-                                onClick={handleAddToCart}
+                                onClick={addToCart}
                             >
                                 Add to Cart
                             </button>

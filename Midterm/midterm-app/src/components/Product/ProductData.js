@@ -5,7 +5,7 @@ const productData = [
         name: 'Abstract Fun',
         type: 'Graphic Pack',
         description: 'Shapes are fun and so abstract.',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/AbstractFunPack%2FWelcomeAbstractFun.jpg?alt=media&token=63e77f30-f0f9-49c2-89e5-3110b9ea2b10',
         imageAlt: 'Abstract fun is the best kind of fun.',
         images: [
@@ -25,7 +25,7 @@ const productData = [
         name: 'Abstract Fun Invert',
         type: 'Graphic Pack',
         description: 'Inverted shapes are fun and so abstract.',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/AbstractFunPack%2FWelcomeAbstractFunInvert.jpg?alt=media&token=00b5501c-788c-48f3-a497-82a6896fcb9a',
         imageAlt: 'Abstract fun is the best kind of fun.',
         images: [
@@ -45,7 +45,7 @@ const productData = [
         name: 'Burst of Color',
         type: 'Graphic Pack',
         description: 'Let the colors pop of your screen with this burst of color.',
-        price: 2,
+        price: 2.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/BurstOfColorPack%2FWelcomeBurstOfColor.jpg?alt=media&token=c73929cd-654a-4305-b3c8-ba51de96a948',
         imageAlt: 'Burst of color is the best kind of color.',
         images: [
@@ -62,7 +62,7 @@ const productData = [
         name: 'Grunge Vibes',
         type: 'Graphic Pack',
         description: 'Our high-quality grunge textures that is exclusively free to download this month.',
-        price: 0,
+        price: 0.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/GrungeVibesPack%2FWelcomeGrungeVibes.jpg?alt=media&token=17cac06c-ce36-4939-97bd-09a3bb188cb3',
         imageAlt: 'Grunge is a new kind of vibe.',
         images: [
@@ -79,7 +79,7 @@ const productData = [
         name: 'Tear',
         description: 'It never hurts to tear things up and make a mess of things.',
         type: 'Graphic Pack',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/NewTearPack%2FWelcomeTear.jpg?alt=media&token=418591e8-4990-4d96-828d-880e2f1debfd',
         imageAlt: 'Tear things up and make a mess of things.',
         images: [
@@ -99,7 +99,7 @@ const productData = [
         name: 'Vintage Future',
         description: 'Vintage is the new future.',
         type: 'Graphic Pack',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/NewVintageFuturePack%2FWelcomeNewFuture.jpg?alt=media&token=fa0fc698-1711-4803-a2a7-bcf1787037c8',
         imageAlt: 'Vintage is the new future.',
         images: [
@@ -119,7 +119,7 @@ const productData = [
         name: 'Out of this World',
         description: 'Out of this world in to the next.',
         type: 'Graphic Pack',
-        price: 5,
+        price: 5.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/OutOfThisWorldPack%2FWelcomeOOTW.jpg?alt=media&token=82dd8be3-f6e6-403e-a018-6b68d5757d21',
         imageAlt: 'Out of this world in to the next.',
         images: [
@@ -139,7 +139,7 @@ const productData = [
         name: 'Playful Summer',
         type: 'Graphic Pack',
         description: 'Summer is here and its time for some fun.',
-        price: 25,
+        price: 25.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/PlayfulSummerPack%2FWelcomePS.jpg?alt=media&token=1f553ccf-3a18-46d2-bec1-e70e134df25c',
         imageAlt: 'Playful summers are sure to come.',
         images: [
@@ -159,7 +159,7 @@ const productData = [
         name: 'Retro Vibes',
         type: 'Graphic Pack',
         description: 'Retro vibes are the best vibes.',
-        price: 25,
+        price: 25.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/RetroVibesPack%2FWelcomeRV.jpg?alt=media&token=56d7d60e-0cca-416a-96af-e27437274ef6',
         imageAlt: 'Retro vibes are the best vibes.',
         images: [
@@ -179,7 +179,7 @@ const productData = [
         name: 'Social Design Light',
         type: 'Graphic Pack',
         description: 'Social just got a whole lot lighter.',
-        price: 25,
+        price: 25.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SocialDesignPack%2FWelcomeLightSocialDesign.jpg?alt=media&token=4e174745-4772-40a2-8f48-d8b41aa37151',
         imageAlt: 'Social just got a whole lot lighter.',
         images: [
@@ -199,7 +199,7 @@ const productData = [
         name: 'Social Design Dark',
         type: 'Graphic Pack',
         description: 'Social just got a whole lot darker.',
-        price: 25,
+        price: 25.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SocialDesignPack%2FWelcomeDarkSocialDesign.jpg?alt=media&token=e7b6282e-b122-46c8-b8ce-083524d50765',
         imageAlt: 'Social just got a whole lot darker.',
         images: [
@@ -219,7 +219,7 @@ const productData = [
         name: 'Split Screen Blue',
         type: 'Graphic Pack',
         description: 'Split the screen to make it blue.',
-        price: 10,
+        price: 10.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SplitScreenPack%2FWelcomeSplitBlue.jpg?alt=media&token=d679bb74-f10e-4382-88c9-adef9647ee7c',
         imageAlt: 'Split the screen to make it blue.',
         images: [
@@ -239,7 +239,7 @@ const productData = [
         name: 'Split Screen Yellow',
         type: 'Graphic Pack',
         description: 'Split the screen to make it yellow.',
-        price: 10,
+        price: 10.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SplitScreenPack%2FWelcomeSplitYellow.jpg?alt=media&token=433aa54b-56e6-4a00-9c61-55bdfbbcac8d',
         imageAlt: 'Split the screen to make it yellow.',
         images: [
@@ -258,7 +258,7 @@ const productData = [
         id: 14,
         name: 'Swirled',
         type: 'Graphic Pack',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/SwirledPack%2FWelcomeSwirled.jpg?alt=media&token=618dd8c5-0c23-432a-8921-66af6ccb037c',
         imageAlt: 'Swirled is the new way to go.',
         images: [
@@ -277,7 +277,7 @@ const productData = [
         id: 15,
         name: 'Touch Light',
         type: 'Graphic Pack',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/TouchOfModernPack%2FWelcomeLightTouch.jpg?alt=media&token=3a9fc9ac-5122-474f-aabc-ae4726db069b',
         imageAlt: 'Touch the light the modern way.',
         images: [
@@ -296,7 +296,7 @@ const productData = [
         id: 16,
         name: 'Touch Dark',
         type: 'Graphic Pack',
-        price: 15,
+        price: 15.0,
         imageSrc: 'https://firebasestorage.googleapis.com/v0/b/designdifferentgraphics.appspot.com/o/TouchOfModernPack%2FWelcomeDarkTouch.jpg?alt=media&token=ac6cdd46-dcad-4d66-a4c1-5e807863c3f8',
         imageAlt: 'Touch the dark the modern way.',
         images: [
