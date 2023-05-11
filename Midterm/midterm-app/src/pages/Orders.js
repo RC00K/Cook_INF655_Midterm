@@ -1,56 +1,158 @@
-import React, { Fragment, useRef, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../components/Cart/CartContext';
+import {
+    collection,
+    getDocs,
+    or,
+    orderBy,
+    query,
+    Timestamp,
+    where,
+} from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
+import { firestore } from '../firebase/config';
+import { formatPrice } from '../helper';
 
-export default function Orders() {
-    // Get cart state and functions from context
-    const { cart, removeFromCart, clearCart, totalPrice } = useCart();
+function Orders() {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { uid } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if(uid) loadOrders();
+    }, [uid]);
+
+    function loadOrders() {
+        setLoading(true);
+        try {
+            const collectionRef = collection(firestore, "orders");
+            const q = query(
+                collectionRef,
+                where("uid", "==", uid),
+                orderBy("createdOn", "desc")
+            );
+            getDocs(q).then((result) => {
+                const tempOrders = [];
+                result.docs.forEach((doc) => {
+                    let currDocument = { id: doc.id, ...doc.data() };
+                    tempOrders.push(currDocument);
+                });
+                setOrders([...tempOrders]);
+            });
+        } catch(error) {
+            console.log(error);
+        }
+        setLoading(false);
+    }
+
+    if(loading || !uid) return <Loading />;
 
     return (
-        <div className="bg-white">
-            <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-                <h2 className="text-left text-2xl font-bold mb-8">Your Orders</h2>
-                <hr className="mb-8" />
-
-                <ul role="list" className="-my-6 divide-y divide-gray-200 mb-2">
-                    {/* Cart Item */}
-                    {cart.map((product) => (
-                        <li key={product.id} className="flex py-6">
-                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <img
-                                    src={product.images[0]}
-                                    alt={product.name}
-                                    className="h-full w-full object-cover object-center"
-                                />
+        <div className="container">
+            {/* No Orders Found */}
+            {!loading && orders.length === 0 && (
+                <div className="row">
+                    <div className="col-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5>No Orders Found</h5>
+                                {/* Shop Now */}
+                                <Link to={"/products"} className="btn btn-primary">
+                                    Shop Now    
+                                </Link>
                             </div>
-                            <div className="ml-4 flex flex-1 flex-col">
-                                <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>
-                                            <a href={`/product/${product.id}`}>{product.name}</a>
-                                        </h3>
-                                        <p className="ml-4">${product.price}</p>
-                                    </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.type}</p>
-                                </div>
-                                <div className="flex-1 flex items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-
-                {/* Payment Information */}
-                <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                    {typeof totalPrice === 'number' && (
-                        <div className="flex justify-between text-base font-medium text-gray-900">
-                            <p>Total</p>
-                            <p>${totalPrice.toFixed(2)}</p>
                         </div>
-                    )}
+                    </div>
+                </div>
+            )}
+            {/* Orders */}
+            {orders.length > 0 && (
+                <div className="row">
+                    <div className="col-12">
+                        <h5>Orders</h5>
+                    </div>
+                </div>
+            )}
+            {orders.map((order, index) => (
+                <div className="row" key={index} my={5}>
+                    <div className="col-12">
+                        <OrderItem orderItem={order} />
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function OrderItem({ orderItem }) {
+    const { line1, line2, city, state, country, postal_code } = orderItem.shippingAddress;
+
+    return (
+        <div className="row">
+            <div className="col-12">
+                <div className="card">
+                    <div className="card-header">
+                        <h5>Order ID: {orderItem.id}</h5>
+                    </div>
+                    {/* Order Placed On */}
+                    <div className="card-body">
+                        <h5>
+                            Order Placed On: 
+                            {new Timestamp(
+                                orderItem.createdOn.seconds,
+                                orderItem.createdOn.nanoseconds
+                            ).toDate().toLocaleDateString()}
+                        </h5>
+                    </div>
+                    {/* Delivery Status */}
+                    <div className="card-body">
+                        <h5>
+                            Delivery Status: 
+                            {orderItem.deliveryStatus}
+                        </h5>
+                    </div>
+                    {/* Order Items */}
+                    <div className="card-body">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {orderItem.items.map((item, key) => (
+                                    <tr key={key}>
+                                        <td>{item.name}</td>
+                                        <td>{item.quantity}</td>
+                                        <td>{formatPrice(item.price)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* Shipping Address */}
+                    <div className="card-body">
+                        <h5>Shipping Address</h5>
+                        <p>{line1}</p>
+                        <p>{line2}</p>
+                        <p>{city}</p>
+                        <p>{state}</p>
+                        <p>{country}</p>
+                        <p>{postal_code}</p>
+                    </div>
+                    {/* Total */}
+                    <div className="card-footer">
+                        <h5 className="text-right">
+                            Total: {formatPrice(item.price)}
+                        </h5>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
+
+export default Orders;

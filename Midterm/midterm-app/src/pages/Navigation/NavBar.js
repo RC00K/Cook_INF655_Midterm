@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import {
+    getDocs,
+    collection
+} from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import CartSlideOut from '../../components/Cart/CartSlideOut';
-import productData from '../../components/Product/ProductData';
 import { auth } from '../../firebase';
-import { useStateValue } from '../../store/StateProvider';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '../../store/CartSlice';
+import { firestore } from '../../firebase/config';
 
 // Array of navigation items
 const navigation = [
@@ -21,39 +26,56 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {
+    const user = useSelector((state) => state.user);
     const navigate = useNavigate();
-
-    // Handling search results and search term.
-    const [searchResults, setSearchResults] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
-
-    // Handling cart open state
+    const dispatch = useDispatch();
     const [cartOpen, setCartOpen] = useState(false);
-    const [{ cart, user }] = useStateValue();
 
-    // Event handler for searching products
-    const handleSearch = (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        setIsSearching(searchTerm !== '');
-        if (searchTerm === '') {
-            setSearchResults([]);
-        } else {
-            const results = productData.filter((product) =>
-                product.name.toLowerCase().includes(searchTerm)
-            );
-            setSearchResults(results);
-        }
+    const handleSignOut = async () => {
+        await auth.signOut(auth);
+        sessionStorage.removeItem("user");
+        dispatch(cartActions.DELETE_CART());
+        navigate("/")
     };
 
-    const userName = user ? user.email.substring(0, user.email.indexOf('@')) : 'Guest';
+    const [products, setProducts] = useState([]);
 
-    const handleSignOut = () => {
-        if (user) {
-            auth.signOut().then(() => {
-                navigate('/signin');
-            });
-        };
+  useEffect(() => {
+    // Get all products from the database
+    const getProducts = async () => {
+      const productsRef = collection(firestore, 'products');
+      const productsSnapshot = await getDocs(productsRef);
+      const productsList = productsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(productsList);
     };
+    getProducts();
+  }, []);
+
+  // Search functionality
+  // State for search results
+  const [searchResults, setSearchResults] = useState([]);
+  // State for searching
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Event handler for searching products
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setIsSearching(searchTerm !== '');
+    if (searchTerm === '') {
+      setSearchResults([]);
+    } else {
+      const results = products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm)
+      );
+      setSearchResults(results);
+    }
+  };
+
+  // Display search results if searching, otherwise display all products
+  const displayedProducts = isSearching ? searchResults : products;
 
     return (
         <Disclosure as="nav" className="bg-gray-900 w-full z-10 fixed top-0">
@@ -103,11 +125,11 @@ const NavBar = () => {
                                         onChange={handleSearch}
                                     />
                                     {/* Search results */}
-                                    {isSearching && searchResults.length > 0 && (
+                                    {isSearching && displayedProducts.length > 0 && (
                                         <div className="absolute mt-2 w-64 bg-gray-800 rounded-md shadow-lg z-10 top-full">
                                             <ul className="divide-y divide-gray-700">
                                                 {/* Map search results to generate product list */}
-                                                {searchResults.map((product) => (
+                                                {displayedProducts.map((product) => (
                                                     <li key={product.id} className="p-2">
                                                         <div className="flex items-center relative">
                                                             <img
@@ -134,15 +156,15 @@ const NavBar = () => {
                                         </div>
                                     )}
                                     {/* No product found */}
-                                    {isSearching && searchResults.length === 0 && (
+                                    {isSearching && displayedProducts.length === 0 && (
                                         <div className="absolute mt-2 w-64 bg-gray-800 rounded-md shadow-lg p-2 z-10 top-full">
                                             <p className="text-sm text-center text-white">No Product Found</p>
                                         </div>
                                     )}
                                 </div>
-                                <>
+                                {user?.isLoggedIn ? (
                                     <div className="ml-4 hidden items-center gap-4 lg:flex">
-                                        <span className="text-gray-400">{`Hello, ${userName}`}</span>
+                                        <span className="text-gray-400">Hello, {user?.name}</span>
                                         <Link to={!user ? '/signin' : '/'} className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600 relative object-cover transform transition-all duration-300 hover:-translate-y-2">
                                             <div className="flex items-center gap-2">
                                                 <button onClick={handleSignOut} type="button">
@@ -150,7 +172,6 @@ const NavBar = () => {
                                                 </button>
                                             </div>
                                         </Link>
-                                        <span className="text-gray-400">Your</span>
                                         <Link to={!user ? '/signin' : '/orders'} className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white relative object-cover transform transition-all duration-300 hover:-translate-y-2">
                                             <div className="flex items-center gap-2">
                                                 <button type="button">
@@ -159,7 +180,18 @@ const NavBar = () => {
                                             </div>
                                         </Link>
                                     </div>
-                                </>
+                                ) : (
+                                    <div className="ml-4 hidden items-center gap-4 lg:flex">
+                                        <span className="text-gray-400">Hello, Guest</span>
+                                        <Link to={!user ? '/' : '/signin'} className="rounded-lg bg-gray-100 px-5 py-2 text-sm font-medium text-gray-600 relative object-cover transform transition-all duration-300 hover:-translate-y-2">
+                                            <div className="flex items-center gap-2">
+                                                <button onClick={handleSignOut} type="button">
+                                                    {user ? 'Sign In' : 'Sign Out'}
+                                                </button>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                )}
                                 <div className="ml-4">
                                     {/* View Cart */}
                                     <button
@@ -169,9 +201,6 @@ const NavBar = () => {
                                     >
                                         <span className="sr-only">View Cart</span>
                                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                                        <span className="absolute -right-1 text-xs text-white bg-red-500 rounded-full px-1">
-                                            {cart.length}
-                                        </span>
                                     </button>
                                     {/* Cart Slide Out */}
                                     {cartOpen && <CartSlideOut setOpen={setCartOpen} />}

@@ -1,8 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
-import CurrencyFormat from 'react-currency-format';
 import { Dialog, Transition } from '@headlessui/react';
-import { useStateValue } from '../../store/StateProvider';
-import { getCartTotal } from '../../store/reducer';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import CheckoutProduct from '../../pages/CheckoutProduct';
 
@@ -71,7 +68,7 @@ const CartSlideOut = ({ setOpen }) => {
                                                             type={item.type}
                                                             price={item.price}
                                                             imageSrc={item.imageSrc}
-                                                            quantity={item.quantity}
+                                                            amount={item.amount}
                                                         />
                                                     ))}
                                                 </div>
@@ -98,7 +95,7 @@ const CartSlideOut = ({ setOpen }) => {
                                                 {/* Go to Cart */}
                                                 <div className="mt-6">
                                                     <a
-                                                        href="/checkout"
+                                                        href="/cart"
                                                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white hover:bg-indigo-700"
                                                     >
                                                         Go to Cart

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useStateValue } from '../store/StateProvider';
 
 const CheckoutProduct = (prop) => {
     const { id, imageSrc, name, type, price, hideButtons } = prop;
@@ -72,7 +71,7 @@ const CheckoutProduct = (prop) => {
                             </div>
                             {!hideButtons && (
                                 <div className="flex-1 flex items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {amount}</p>
+                                    <p className="text-gray-500">Qty</p>
                                     <button
                                         type="button"
                                         className={amount < 1 ? 'disable' : 'font-medium text-indigo-600 hover:text-indigo-500'}
